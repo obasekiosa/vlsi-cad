@@ -66,39 +66,44 @@ def negativeCofactor(F, x):
     return cofactor(F, -x)
 
 def oneVariableAND(x, P):
-    """ x is a non-zero integer denoting the variable of interest negative x ==> x_complement positive x ==> x """
+    """
+        x is a non-zero integer denoting the variable of interest
+        negative x ==> x_complement positive x ==> x
+    """
     index = abs(x) - 1
-    x_and_p = []
+    x_and_P = []
     if x > 0:
         for cube in P:
-            new_cube = copyCube(cube)
             if cube[index] == (0, 1):
-                x_and_p.append(new_cube)
+                new_cube = copyCube(cube)
+                x_and_P.append(new_cube)
             elif cube[index] == (1, 0):
                 continue # don't add cube to AND list
             elif cube[index] == (1, 1):
+                new_cube = copyCube(cube)
                 new_cube[index] = (0, 1)
-                x_and_p.append(new_cube)
+                x_and_P.append(new_cube)
             else:
                 continue
         
     elif x < 0:
         for cube in P:
-            new_cube = copyCube(cube)
             if cube[index] == (1, 0):
-                x_and_p.append(new_cube)
+                new_cube = copyCube(cube)
+                x_and_P.append(new_cube)
             elif cube[index] == (0, 1):
                 continue # don't add cube to AND list
             elif cube[index] == (1, 1):
+                new_cube = copyCube(cube)
                 new_cube[index] = (1, 0)
-                x_and_p.append(new_cube)
+                x_and_P.append(new_cube)
             else:
                 continue
 
     else:
         pass
         
-    return x_and_p
+    return x_and_P
 
 def NOT(F):
 #     ##check if F is simple enough to complement it directly and quit
