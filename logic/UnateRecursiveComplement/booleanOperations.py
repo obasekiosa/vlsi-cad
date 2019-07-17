@@ -200,7 +200,65 @@ def simpleNOT(F):
     return singleCubeNOT(F_reduced[0])
 
 def selectSplitingVariableNot(F):
-    pass
+    positive_count = 0
+    negative_count = 0
+    num_of_variables = len(F[0])
+    counts = []
+    
+    for i in range(num_of_variables):
+        for cube in F:
+            if cube[i] == (0, 1):
+                positive_count += 1
+            elif cube[i] == (0, 1):
+                negative_count += 1
+            else:
+                pass
+        counts.append((positive_count, negative_count))
+        positive_count = 0
+        negative_count = 0
+    
+    choosen_var = 0
+    best_count = 0
+    best_difference = num_of_variables
+    for i in range(len(counts)):
+        if counts[i][0] > 0 and counts[i][1] > 0:
+            num_times_var_occured = counts[i][0] + counts[i][1]
+            binate_difference = abs(counts[i][0] - counts[i][1])
+            if num_times_var_occured > best_count:
+                choosen_var = i
+                best_count = num_times_var_occured
+                best_difference = binate_difference
+            elif num_times_var_occured == best_count:
+                if binate_difference < best_difference:
+                    choosen_var = i
+                    best_count = num_times_var_occured
+                    best_difference = binate_difference
+                else:
+                    pass
+            else:
+                pass
+    
+    if choosen_var == 0:
+        for i in range(len(counts)):
+            if counts[i][0] == 0:
+                num_times_var_occured = counts[i][1]
+            elif counts[i][1] == 0:
+                num_times_var_occured = counts[i][1]
+            else:
+                continue
+            
+            if num_times_var_occured > best_count:
+                choosen_var = i
+                best_count = num_times_var_occured
+            else:
+                continue
+
+    if choosen_var == 0:
+        choosen_var = 1
+    else:
+        pass
+
+    return choosen_var
 
 def NOT(F):
 #     ##check if F is simple enough to complement it directly and quit
