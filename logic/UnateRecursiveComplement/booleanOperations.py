@@ -21,7 +21,39 @@ def OR(F, G):
     return F_or_G
 
 def oneVariableAND(x, P):
-    pass
+    """ x is a non-zero integer denoting the variable of interest negative x ==> x_complement positive x ==> x """
+    index = abs(x) - 1
+    x_and_p = []
+    if x > 0:
+        for cube in P:
+            new_cube = copyCube(cube)
+            if cube[index] == (0, 1):
+                x_and_p.append(new_cube)
+            elif cube[index] == (1, 0):
+                continue # don't add cube to AND list
+            elif cube[index] == (1, 1):
+                new_cube[index] = (0, 1)
+                x_and_p.append(new_cube)
+            else:
+                continue
+        
+    elif x < 0:
+        for cube in P:
+            new_cube = copyCube(cube)
+            if cube[index] == (1, 0):
+                x_and_p.append(new_cube)
+            elif cube[index] == (0, 1):
+                continue # don't add cube to AND list
+            elif cube[index] == (1, 1):
+                new_cube[index] = (1, 0)
+                x_and_p.append(new_cube)
+            else:
+                continue
+
+    else:
+        pass
+        
+    return x_and_p
 
 def NOT(F):
     pass
