@@ -150,7 +150,7 @@ def oneVariableAND(x, P):
 
 def isZero(F):
     F_reduced = reduce(F)
-    if len(F_reduced != 1):
+    if len(F_reduced) != 1:
         return False
     else:
         return isZeroCube(F_reduced[0])
