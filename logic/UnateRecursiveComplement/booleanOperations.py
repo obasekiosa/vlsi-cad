@@ -22,6 +22,49 @@ def OR(F, G):
         F_or_G.append(copyCube(cube))
     return F_or_G
 
+def cofactor(F, x):
+    index = abs(x) - 1
+    F_cofactor_x = []
+    if x > 0:
+        for cube in F:
+            if cube[index] == (0, 0):
+                continue
+            elif cube[index] == (0, 1):
+                new_cube = copyCube(cube)
+                new_cube[index] = (1, 1)
+                F_cofactor_x.append(new_cube)
+            elif cube[index] == (1, 0):
+                continue
+            elif cube[index] == (1, 1):
+                new_cube = copyCube(cube)
+                F_cofactor_x.append(new_cube)
+            else:
+                continue            
+    elif x < 0:
+        for cube in F:
+            if cube[index] == (0, 0):
+                continue
+            elif cube[index] == (0, 1):
+                continue
+            elif cube[index] == (1, 0):
+                new_cube = copyCube(cube)
+                new_cube[index] = (1, 1)
+            elif cube[index] == (1, 1):
+                new_cube = copyCube(cube)
+                F_cofactor_x.append(new_cube)
+            else:
+                continue            
+    else:
+        pass
+    
+    return F_cofactor_x
+
+def positveCofactor(F, x):
+    return cofactor(F, x)
+
+def negativeCofactor(F, x):
+    return cofactor(F, -x)
+
 def oneVariableAND(x, P):
     """ x is a non-zero integer denoting the variable of interest negative x ==> x_complement positive x ==> x """
     index = abs(x) - 1
@@ -58,6 +101,17 @@ def oneVariableAND(x, P):
     return x_and_p
 
 def NOT(F):
+#     ##check if F is simple enough to complement it directly and quit
+#     if (condition for simple enough to complement):
+#         #return directly computed complement of F
+#     else:
+#         ## do recursion
+#         ## select variable for splitting
+#         P = NOT(positveCofactor(F, x))
+#         N = NOT(negativeCofactor(F, x))
+#         P = oneVariableAND(x, P)   # x and P
+#         N = oneVariableAND(-x, N)  # x_complement and N
+#         return OR(P, N)
     pass
 
 def AND(F, G):
