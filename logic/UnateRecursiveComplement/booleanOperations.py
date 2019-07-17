@@ -105,18 +105,44 @@ def oneVariableAND(x, P):
         
     return x_and_P
 
+def isZeros(F):
+    pass
+
+def allOnes(F):
+    pass
+
+def isOne(F):
+    pass
+
+def isOnlyOneCube(F):
+    pass
+
+def allCubeZeros(F):
+    pass
+
+def simpleNOT(F):
+    pass
+
+def selectSplitingVariableNot(F):
+    pass
+
 def NOT(F):
 #     ##check if F is simple enough to complement it directly and quit
-#     if (condition for simple enough to complement):
-#         #return directly computed complement of F
-#     else:
-#         ## do recursion
-#         ## select variable for splitting
-#         P = NOT(positveCofactor(F, x))
-#         N = NOT(negativeCofactor(F, x))
-#         P = oneVariableAND(x, P)   # x and P
-#         N = oneVariableAND(-x, N)  # x_complement and N
-#         return OR(P, N)
+    if isZeros(F):
+        return allOnes(F)
+    elif isOne(F):
+        return allCubeZeros(F)
+    elif isOnlyOneCube(F):
+        return simpleNOT(F)
+    else:
+        ## do recursion
+        ## select variable for splitting
+        x = selectSplitingVariableNot(F)
+        P = NOT(positveCofactor(F, x))
+        N = NOT(negativeCofactor(F, x))
+        P = oneVariableAND(x, P)   # x and P
+        N = oneVariableAND(-x, N)  # x_complement and N
+        return OR(P, N)
     pass
 
 def AND(F, G):
