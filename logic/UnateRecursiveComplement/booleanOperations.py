@@ -79,6 +79,7 @@ def cofactor(F, x):
             elif cube[index] == (1, 0):
                 new_cube = copyCube(cube)
                 new_cube[index] = (1, 1)
+                F_cofactor_x.append(new_cube)
             elif cube[index] == (1, 1):
                 new_cube = copyCube(cube)
                 F_cofactor_x.append(new_cube)
