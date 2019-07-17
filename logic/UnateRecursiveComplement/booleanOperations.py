@@ -1,16 +1,7 @@
 def copyCube(cube):
     copy = []
     for e in cube:
-        if e == (0, 1):
-            copy.append((0, 1))
-        elif e == (1, 0):
-            copy.append((1, 0))
-        elif e == (1, 1):
-            copy.append((1, 1))
-        elif e == (0, 0):
-            copy.append((0, 0))
-        else:
-            print("Invalid entry")
+        copy.append(e)
     
     return copy
 
@@ -33,12 +24,24 @@ def isZeroCube(cube):
         return False
 
 def isOneCube(cube):
-    for e in cube:
-        if e != (1, 1):
-            return False
-        else:
-            continue
-    return True
+    return onesCube(cube) == cube
+
+def reduce(F):
+    F_reduced = []
+    ones = onesCube(F[0])
+    if ones in F:
+        F_reduced.append(ones)
+        return F_reduced
+    else:
+        for cube in F:
+            if (0, 0) not in cube:
+                F_reduced.append(copyCube(cube))
+            else:
+                pass
+    
+    if len(F_reduced) == 0:
+        F_reduced.append(zerosCube(F[0]))
+    return F_reduced
 
 def OR(F, G):
     F_or_G = []
@@ -50,6 +53,7 @@ def OR(F, G):
 
 def cofactor(F, x):
     index = abs(x) - 1
+    F = reduce(F)
     F_cofactor_x = []
     if x > 0:
         for cube in F:
@@ -85,6 +89,8 @@ def cofactor(F, x):
 
     if len(F_cofactor_x) == 0:
         F_cofactor_x.append(zerosCube(F[0]))
+    else:
+        F_cofactor_x = reduce(F_cofactor_x)
     
     return F_cofactor_x
 
@@ -100,6 +106,7 @@ def oneVariableAND(x, P):
         negative x ==> x_complement positive x ==> x
     """
     index = abs(x) - 1
+    P = reduce(P)
     x_and_P = []
     if x > 0:
         for cube in P:
@@ -134,14 +141,18 @@ def oneVariableAND(x, P):
 
     if len(x_and_P) == 0:
         x_and_P.append(zerosCube(P[0]))
+    else:
+        x_and_P = reduce(x_and_P)
         
     return x_and_P
 
+
 def isZero(F):
-    for cube in F:
-        if not isZeroCube(cube):
-            return False
-    return True
+    F_reduced = reduce(F)
+    if len(F_reduced != 1):
+        return False
+    else:
+        return isZeroCube(F_reduced[0])
 
 def allOnes(F):
     return [onesCube(F[0])]
@@ -158,19 +169,14 @@ def isOne(F):
         return True
     return False
 
-def isOnlyOneCube(F):
-    count = 0
-    for cube in F:
-        if not isZeroCube(cube):
-            count += 1
-        else:
-            continue
-    return count == 1
+def isSingleCube(F):
+    F_reduced = reduce(F)
+    return len(F_reduced) == 1
 
 def allZeros(F):
     return [zerosCube(F[0])]
-    
-def simpleCubeNOT(cube):
+
+def singleCubeNOT(cube):
     cube_not = []
     for i in range(len(cube)):
         new_cube = onesCube(cube)
@@ -189,11 +195,8 @@ def simpleCubeNOT(cube):
     return cube_not
 
 def simpleNOT(F):
-    for cube in F:
-        if not isZeroCube(cube):
-            return simpleCubeNOT(cube)
-        else:
-            continue
+    F_reduced = reduce(F)
+    return singleCubeNOT(F_reduced[0])
 
 def selectSplitingVariableNot(F):
     pass
@@ -204,7 +207,7 @@ def NOT(F):
         return allOnes(F)
     elif isOne(F):
         return allZeros(F)
-    elif isOnlyOneCube(F):
+    elif isSingleCube(F):
         return simpleNOT(F)
     else:
         ## do recursion
