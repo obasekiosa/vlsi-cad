@@ -11,7 +11,7 @@ def copyCube(cube):
             copy.append((0, 0))
         else:
             print("Invalid entry")
-    
+            
     return copy
 
 def OR(F, G):
