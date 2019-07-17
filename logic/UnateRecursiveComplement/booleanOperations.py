@@ -270,6 +270,7 @@ def selectSplitingVariable(F):
     return choosen_var
 
 def NOT(F):
+    F = reduce(F)
 #     ##check if F is simple enough to complement it directly and quit
     if isZero(F):
         return allOnes(F)
@@ -285,8 +286,8 @@ def NOT(F):
         N = NOT(negativeCofactor(F, x))
         P = oneVariableAND(x, P)   # x and P
         N = oneVariableAND(-x, N)  # x_complement and N
-        return OR(P, N)
-    pass
+        
+        return reduce(OR(P, N))
 
 def AND(F, G):
     return NOT(OR(NOT(F), NOT(G)))
