@@ -178,20 +178,27 @@ def allZeros(F):
     return [zerosCube(F[0])]
 
 def singleCubeNOT(cube):
-    cube_not = []
-    for i in range(len(cube)):
-        new_cube = onesCube(cube)
-        if cube[i] == (0, 0):
-            new_cube[i] = (0, 0)
-        elif cube[i] == (0, 1):
-            new_cube[i] = (0, 1)
-        elif cube[i] == (1, 0):
-            new_cube[i] = (1, 0)
-        elif cube[i] == (1, 1):
-            new_cube[i] = (1, 1)
-        else:
-            pass
-        cube_not.append(new_cube)
+    if isZeroCube(cube):
+        return onesCube(cube)
+    elif isOneCube(cube):
+        return zerosCube(cube)
+    else:
+        cube_not = []
+        for i in range(len(cube)):
+            if cube[i] == (0, 0):
+                return zerosCube(cube)
+            elif cube[i] == (0, 1):
+                new_cube = onesCube(cube)
+                new_cube[i] = (1, 0)
+                cube_not.append(new_cube)
+            elif cube[i] == (1, 0):
+                new_cube = onesCube(cube)
+                new_cube[i] = (0, 1)
+                cube_not.append(new_cube)
+            elif cube[i] == (1, 1):
+                pass
+            else:
+                pass
     
     cube_not = reduce(cube_not)
     return cube_not
