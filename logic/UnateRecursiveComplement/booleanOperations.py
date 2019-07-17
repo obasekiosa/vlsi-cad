@@ -280,7 +280,7 @@ def NOT(F):
         ## do recursion
         ## select variable for splitting
         x = selectSplitingVariableNot(F)
-        P = NOT(positveCofactor(F, x))
+        P = NOT(positiveCofactor(F, x))
         N = NOT(negativeCofactor(F, x))
         P = oneVariableAND(x, P)   # x and P
         N = oneVariableAND(-x, N)  # x_complement and N
