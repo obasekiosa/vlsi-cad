@@ -95,7 +95,7 @@ def cofactor(F, x):
     
     return F_cofactor_x
 
-def positveCofactor(F, x):
+def positiveCofactor(F, x):
     return cofactor(F, x)
 
 def negativeCofactor(F, x):
