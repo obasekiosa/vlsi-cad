@@ -16,8 +16,10 @@ def copyCube(cube):
 
 def OR(F, G):
     F_or_G = []
-    F_or_G.append(F)
-    F_or_G.append(G)
+    for cube in F:
+        F_or_G.append(copyCube(cube))
+    for cube in G:
+        F_or_G.append(copyCube(cube))
     return F_or_G
 
 def oneVariableAND(x, P):
