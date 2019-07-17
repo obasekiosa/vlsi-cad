@@ -1,3 +1,4 @@
+import sys
 import booleanOperations
 
 def generateCube(variable_list, num_of_variables):
@@ -10,7 +11,6 @@ def generateCube(variable_list, num_of_variables):
             cube.append((1, 0))
         else:
             cube.append((1, 1))
-
     return cube
 
 def writeOuput(output_function):
@@ -39,16 +39,33 @@ def writeOuput(output_function):
             else:
                 continue
         if output != '':
-            output = str(num_of_cube_variables) + " " + output + "\n"
+            output = str(num_of_cube_variables) + output + "\n"
         else:
             output = str(num_of_cube_variables) + "\n"
 
         destination_file.write(output)
+        output = ''
+        num_of_cube_variables = 0
     
     destination_file.close()
-    
     return
 
+if len(sys.argv) != 2:
+    print(" 1 argument needed")
+    exit()
+elif sys.argv[1].count('.') != 1:
+    print("file extention needed")
+    exit()
+elif sys.argv[1].split(".")[1].lower() != "pcn":
+    print(".pcn file needed")
+    exit()
+else:
+    pass
+
+
+    
+file_name = sys.argv[1]
+destination_file_name = "out_" + file_name
 
 f = open(file_name, "r")
 line = f.readline()
@@ -60,13 +77,15 @@ boolean_function = []
 
 for i in range(num_of_cubes):
     line = f.readline()
+    line = line[:-1]
     line = line.split(' ')
     num_of_cube_variables = int(line[0])
     cube = []
     for e in line[1:]:
         if e != '':
             cube.append(int(e))
-    boolean_function.append(generateCube([cube], num_of_variables))
+    pcn_cube = generateCube(cube, num_of_variables)
+    boolean_function.append(pcn_cube)
 
 f.close()
 
