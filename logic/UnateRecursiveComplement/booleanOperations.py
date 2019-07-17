@@ -208,6 +208,7 @@ def simpleNOT(F):
     return singleCubeNOT(F_reduced[0])
 
 def selectSplitingVariableNot(F):
+    F = reduce(F)
     positive_count = 0
     negative_count = 0
     num_of_variables = len(F[0])
@@ -217,7 +218,7 @@ def selectSplitingVariableNot(F):
         for cube in F:
             if cube[i] == (0, 1):
                 positive_count += 1
-            elif cube[i] == (0, 1):
+            elif cube[i] == (1, 0):
                 negative_count += 1
             else:
                 pass
@@ -233,12 +234,12 @@ def selectSplitingVariableNot(F):
             num_times_var_occured = counts[i][0] + counts[i][1]
             binate_difference = abs(counts[i][0] - counts[i][1])
             if num_times_var_occured > best_count:
-                choosen_var = i
+                choosen_var = i+1
                 best_count = num_times_var_occured
                 best_difference = binate_difference
             elif num_times_var_occured == best_count:
                 if binate_difference < best_difference:
-                    choosen_var = i
+                    choosen_var = i+1
                     best_count = num_times_var_occured
                     best_difference = binate_difference
                 else:
@@ -251,12 +252,12 @@ def selectSplitingVariableNot(F):
             if counts[i][0] == 0:
                 num_times_var_occured = counts[i][1]
             elif counts[i][1] == 0:
-                num_times_var_occured = counts[i][1]
+                num_times_var_occured = counts[i][0]
             else:
                 continue
             
             if num_times_var_occured > best_count:
-                choosen_var = i
+                choosen_var = i+1
                 best_count = num_times_var_occured
             else:
                 continue
