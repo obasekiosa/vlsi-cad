@@ -207,7 +207,7 @@ def simpleNOT(F):
     F_reduced = reduce(F)
     return singleCubeNOT(F_reduced[0])
 
-def selectSplitingVariableNot(F):
+def selectSplitingVariable(F):
     F = reduce(F)
     positive_count = 0
     negative_count = 0
@@ -280,7 +280,7 @@ def NOT(F):
     else:
         ## do recursion
         ## select variable for splitting
-        x = selectSplitingVariableNot(F)
+        x = selectSplitingVariable(F)
         P = NOT(positiveCofactor(F, x))
         N = NOT(negativeCofactor(F, x))
         P = oneVariableAND(x, P)   # x and P
