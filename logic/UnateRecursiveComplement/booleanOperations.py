@@ -192,6 +192,7 @@ def singleCubeNOT(cube):
             pass
         cube_not.append(new_cube)
     
+    cube_not = reduce(cube_not)
     return cube_not
 
 def simpleNOT(F):
