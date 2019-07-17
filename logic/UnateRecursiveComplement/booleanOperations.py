@@ -11,8 +11,34 @@ def copyCube(cube):
             copy.append((0, 0))
         else:
             print("Invalid entry")
-            
+    
     return copy
+
+def zerosCube(cube):
+    new_cube = []
+    for e in cube:
+        new_cube.append((0, 0))
+    return new_cube
+
+def onesCube(cube):
+    new_cube = []
+    for e in cube:
+        new_cube.append((1, 1))
+    return new_cube
+
+def isZeroCube(cube):
+    if (0, 0) in cube:
+        return True
+    else:
+        return False
+
+def isOneCube(cube):
+    for e in cube:
+        if e != (1, 1):
+            return False
+        else:
+            continue
+    return True
 
 def OR(F, G):
     F_or_G = []
@@ -56,6 +82,9 @@ def cofactor(F, x):
                 continue            
     else:
         pass
+
+    if len(F_cofactor_x) == 0:
+        F_cofactor_x.append(zerosCube(F[0]))
     
     return F_cofactor_x
 
@@ -102,36 +131,79 @@ def oneVariableAND(x, P):
 
     else:
         pass
+
+    if len(x_and_P) == 0:
+        x_and_P.append(zerosCube(P[0]))
         
     return x_and_P
 
-def isZeros(F):
-    pass
+def isZero(F):
+    for cube in F:
+        if not isZeroCube(cube):
+            return False
+    return True
 
 def allOnes(F):
-    pass
+    return [onesCube(F[0])]
+
+def tautology(F):
+    # TODO
+    return False
 
 def isOne(F):
-    pass
+    for cube in F:
+        if isOneCube(cube):
+            return True
+    if tautology(F):
+        return True
+    return False
 
 def isOnlyOneCube(F):
-    pass
+    count = 0
+    for cube in F:
+        if not isZeroCube(cube):
+            count += 1
+        else:
+            continue
+    return count == 1
 
-def allCubeZeros(F):
-    pass
+def allZeros(F):
+    return [zerosCube(F[0])]
+    
+def simpleCubeNOT(cube):
+    cube_not = []
+    for i in range(len(cube)):
+        new_cube = onesCube(cube)
+        if cube[i] == (0, 0):
+            new_cube[i] = (0, 0)
+        elif cube[i] == (0, 1):
+            new_cube[i] = (0, 1)
+        elif cube[i] == (1, 0):
+            new_cube[i] = (1, 0)
+        elif cube[i] == (1, 1):
+            new_cube[i] = (1, 1)
+        else:
+            pass
+        cube_not.append(new_cube)
+    
+    return cube_not
 
 def simpleNOT(F):
-    pass
+    for cube in F:
+        if not isZeroCube(cube):
+            return simpleCubeNOT(cube)
+        else:
+            continue
 
 def selectSplitingVariableNot(F):
     pass
 
 def NOT(F):
 #     ##check if F is simple enough to complement it directly and quit
-    if isZeros(F):
+    if isZero(F):
         return allOnes(F)
     elif isOne(F):
-        return allCubeZeros(F)
+        return allZeros(F)
     elif isOnlyOneCube(F):
         return simpleNOT(F)
     else:
