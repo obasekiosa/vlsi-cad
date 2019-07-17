@@ -11,4 +11,4 @@ def NOT(F):
     pass
 
 def AND(F, G):
-    pass
+    return NOT(OR(NOT(F), NOT(G)))
